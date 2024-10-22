@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Import Firebase JS SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5SMpBdO8bU-TzvfL9fiN3mgoSIuXUDac",
+      authDomain: "vertex-f7f6a.firebaseapp.com",
+      projectId: "vertex-f7f6a",
+      storageBucket: "vertex-f7f6a.appspot.com",
+      messagingSenderId: "1035833859124",
+      appId: "1:1035833859124:web:6dea48c865c72345b8fe61",
+      measurementId: "G-YCXX87XSZJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Function to display error messages
+    const displayErrorMessage = (message) => {
+      document.getElementById("error-message").innerText = message;
+    };
+
+    // Sign In function
+    const signIn = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Clear error messages
+          displayErrorMessage("");
+          // Signed in
+          console.log("User signed in:", userCredential.user);
+          // Redirect to index.html
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode === "auth/wrong-password") {
+            displayErrorMessage("Incorrect password. Please try again.");
+          } else if (errorCode === "auth/user-not-found") {
+            displayErrorMessage("No account found with this email.");
+          } else {
+            displayErrorMessage(errorMessage);
+          }
+        });
+    };
+
+    // Password reset function
+    const resetPassword = () => {
+      const email = document.getElementById("email").value;
+
+      if (!email) {
+        displayErrorMessage("Please enter your email to reset your password.");
+        return;
+      }
+
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          displayErrorMessage("Password reset email sent! Please check your inbox.");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode === "auth/user-not-found") {
+            displayErrorMessage("No account found with this email.");
+          } else {
+            displayErrorMessage(errorMessage);
+          }
+        });
+    };
+
+    // Attach event listeners after DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('submit-btn').addEventListener('click', signIn);
+      document.getElementById('reset-password').addEventListener('click', resetPassword);
+    });
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #666667;
+    }
+
+    .form {
+      width: 400px;
+      border-radius: 5px;
+      background-color: white;
+      padding: 5px 10px;
+    }
+
+    label {
+      display: block;
+      font-weight: bolder;
+      margin: 5px 0px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 5px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    #submit-btn {
+      border: none;
+      background-color: rgb(106, 106, 106);
+      width: 100%;
+      padding: 10px 8px;
+      color: white;
+      font-weight: bolder;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin: 9px 0px;
+    }
+
+    #reset-password {
+      color: rgb(51, 51, 51);
+      cursor: pointer;
+      display: block;
+      margin-top: 10px;
+    }
+
+    p {
+      font-size: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: bolder;
+    }
+
+    #error-message {
+      color: red;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form">
+    <!-- Error message display -->
+    <div id="error-message"></div>
+
+    <!-- Email  -->
+    <div class="email">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" placeholder="Write your email" />
+    </div>
+    <!-- Password -->
+    <div class="pass">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" placeholder="Password" />
+    </div>
+
+    <!-- Sign In button -->
+    <button href="findwork.html" id="submit-btn">Sign In</button>
+    <!-- Forgot Password option -->
+    <span id="reset-password">Forgot Password?</span>
+    <!-- Sign Up option -->
+    <p>Don't have an account?</p>
+    <span><a href="signUp.html">Sign Up</a></span>
+  </div>
+</body>
+
+</html>

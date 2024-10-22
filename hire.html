@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance-Connect - Hire Freelancers</title>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333333;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #cccccc;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        button {
+            background-color: #444444;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555555;
+        }
+
+        .project-list {
+            margin-top: 30px;
+        }
+
+        .project-item {
+            background-color: #333333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .project-item h3 {
+            margin: 0 0 10px 0;
+            color: #cccccc;
+        }
+
+        .freelancer-profiles {
+            margin-top: 30px;
+        }
+
+        .freelancer-item {
+            background-color: #333333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .freelancer-item h3 {
+            margin: 0 0 10px 0;
+            color: #cccccc;
+        }
+
+        footer {
+            background-color: #333333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="Images/logo-modified.png" alt="Logo" class="logo">
+        <h1>Freelance-Connect</h1>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="signin.html">Sign In</a>
+            <a href="signUp.html">Sign Up</a>
+            <a href="findwork.html">Find Work</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Hire Freelancers</h2>
+
+        <section>
+            <h3>1. Hire by Uploading Project Details</h3>
+            <div class="form-group">
+                <label for="projectTitle">Project Title</label>
+                <input type="text" id="projectTitle" placeholder="Enter project title">
+            </div>
+            <div class="form-group">
+                <label for="completionDate">Date of Completion</label>
+                <input type="date" id="completionDate">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" id="price" placeholder="Enter price for the project">
+            </div>
+            <div class="form-group">
+                <label for="recruiterName">Recruiter Name</label>
+                <input type="text" id="recruiterName" placeholder="Enter your name">
+            </div>
+            <button onclick="postProject()">Post Project</button>
+
+            <div class="project-list" id="projectList">
+                <h3>Posted Projects</h3>
+            </div>
+        </section>
+
+        <section class="freelancer-profiles">
+            <h3>2. Hire Freelancers with Profiles</h3>
+            <div class="freelancer-item">
+                <h3>Freelancer: John Doe</h3>
+                <p><strong>Skills:</strong> Web Development, JavaScript, React</p>
+                <p><strong>Experience:</strong> 5 years</p>
+            </div>
+            <div class="freelancer-item">
+                <h3>Freelancer: Jane Smith</h3>
+                <p><strong>Skills:</strong> Graphic Design, Photoshop, Illustrator</p>
+                <p><strong>Experience:</strong> 3 years</p>
+            </div>
+            <div class="freelancer-item">
+                <h3>Freelancer: Alice Johnson</h3>
+                <p><strong>Skills:</strong> Content Writing, SEO, Blogging</p>
+                <p><strong>Experience:</strong> 4 years</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 Freelance-Connect. All rights reserved.</p>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+    </footer>
+
+    <script>
+        function postProject() {
+            const projectTitle = document.getElementById('projectTitle').value;
+            const completionDate = document.getElementById('completionDate').value;
+            const price = document.getElementById('price').value;
+            const recruiterName = document.getElementById('recruiterName').value;
+
+            if (projectTitle && completionDate && price && recruiterName) {
+                const projectList = document.getElementById('projectList');
+
+                const projectItem = document.createElement('div');
+                projectItem.className = 'project-item';
+
+                projectItem.innerHTML = `
+                    <h3>${projectTitle}</h3>
+                    <p><strong>Recruiter:</strong> ${recruiterName}</p>
+                    <p><strong>Completion Date:</strong> ${completionDate}</p>
+                    <p><strong>Price:</strong> ${price}</p>
+                `;
+
+                projectList.appendChild(projectItem);
+
+                // Clear the form
+                document.getElementById('projectTitle').value = '';
+                document.getElementById('completionDate').value = '';
+                document.getElementById('price').value = '';
+                document.getElementById('recruiterName').value = '';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+    </script>
+</body>
+
+</html>
